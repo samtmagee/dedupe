@@ -1,4 +1,6 @@
-# Define folders to compare, folderB is the folder we want to prune file from that already exist in folderA
+# Update the two following locations to define the folders to compare,
+# folderA is the folder we want to keep the data
+# folderB is the folder we want to prune files from that already exist in folderA
 $folderA = "$env:USERPROFILE\OneDrive\GITHub\Dedupe\Test Data\Duplicates in two folders with csv\Test data\Folder A"
 $folderB = "$env:USERPROFILE\OneDrive\GITHub\Dedupe\Test Data\Duplicates in two folders with csv\Test data\Folder B"
 
