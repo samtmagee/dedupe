@@ -1,17 +1,17 @@
 # Define folders to compare, folder 1 is the folder we want to prune file from that already exist in folder 2
-$folder1 = "$env:USERPROFILE\OneDrive\GITHub\dedupe\Test Data\Duplicates in two folders with csv\Test data\Folder 1"
-$folder2 = "$env:USERPROFILE\OneDrive\GITHub\dedupe\Test Data\Duplicates in two folders with csv\Test data\Folder 2"
+$folderA = "$env:USERPROFILE\OneDrive\GITHub\Dedupe\Test Data\Duplicates in two folders with csv\Test data\Folder 1"
+$folderB = "$env:USERPROFILE\OneDrive\GITHub\Dedupe\Test Data\Duplicates in two folders with csv\Test data\Folder 2"
 
 # Get a list of the files, hash them and store in a CSV file with their algorithm , hash and path
-Get-ChildItem -Path $folder1 -Recurse | Get-FileHash | Export-Csv -Path "$env:USERPROFILE\OneDrive\GITHub\dedupe\Test Data\Duplicates in two folders with csv\folder1.csv" -NoTypeInformation
-Get-ChildItem -Path $folder2 -Recurse | Get-FileHash | Export-Csv -Path "$env:USERPROFILE\OneDrive\GITHub\dedupe\Test Data\Duplicates in two folders with csv\folder2.csv" -NoTypeInformation
+$folderAData = Get-ChildItem -Path $folderA -Recurse | Get-FileHash
+$folderBData = Get-ChildItem -Path $folderB -Recurse | Get-FileHash
 
-# Import the CSV files
-$data1 = Import-Csv -Path "$env:USERPROFILE\OneDrive\GITHub\dedupe\Test Data\Duplicates in two folders with csv\folder1.csv"
-$data2 = Import-Csv -Path "$env:USERPROFILE\OneDrive\GITHub\dedupe\Test Data\Duplicates in two folders with csv\folder2.csv"
+# Export the CSV files
+$folderAData | Export-Csv -Path "$env:USERPROFILE\Dedupe - FolderA.csv" -NoTypeInformation
+$folderBData | Export-Csv -Path "$env:USERPROFILE\Dedupe - FolderB.csv" -NoTypeInformation
 
 # Compare the CSV files and return hashes that exist in both CSV files
-$comparison = Compare-Object -ReferenceObject $data1.'Hash' -DifferenceObject $data2.'Hash' -ExcludeDifferent -IncludeEqual
+$comparison = Compare-Object -ReferenceObject $folderAData.'Hash' -DifferenceObject $folderBData.'Hash' -ExcludeDifferent -IncludeEqual
 
 # Show Algorithm, Hash and Path from the comparison that show up in folder 1
-$data1 | Where-Object { $comparison.'InputObject' -contains $_.'Hash' } | Format-Table -AutoSize Algorithm,Hash,Path
+$folderBData | Where-Object { $comparison.'InputObject' -contains $_.'Hash' } | Format-Table -AutoSize Algorithm,Hash,Path
