@@ -17,4 +17,6 @@ $comparison = Compare-Object -ReferenceObject $folderAData.'Hash' -DifferenceObj
 
 # Show Algorithm, Hash and Path from the comparison that show up in folderB
 # These are the duplicate files that exist in both folderA and folderB (can be deleted from folderB)
-$folderBData | Where-Object { $comparison.'InputObject' -contains $_.'Hash' } | Format-Table -AutoSize Algorithm,Hash,Path
+$results = $folderBData | Where-Object { $comparison.'InputObject' -contains $_.'Hash' } | Select-Object 'Algorithm', 'Hash', 'Path'
+$results | Format-Table -AutoSize Algorithm,Hash,Path
+$results | Export-Csv -Path "$env:USERPROFILE\Dedupe - Results.csv" -NoTypeInformation
