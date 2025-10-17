@@ -2,10 +2,10 @@ $dir1 = "$env:USERPROFILE\github\dedupe\Test Data\Duplicates in two folders\Test
 $dir2 = "$env:USERPROFILE\github\dedupe\Test Data\Duplicates in two folders\Test data\Folder 2"
 
 # Get a list of files in the first directory
-$files1 = Get-ChildItem $dir1
+$files1 = Get-ChildItem -Path $dir1 -Recurse -File
 
 # Get a list of files in the second directory
-$files2 = Get-ChildItem $dir2
+$files2 = Get-ChildItem -Path $dir2 -Recurse -File
 
 # Loop through the list of files in the first directory
 foreach ($file1 in $files1) {
