@@ -5,8 +5,8 @@ $folderA = "$env:USERPROFILE\OneDrive\GITHub\Dedupe\Test Data\Duplicates in two 
 $folderB = "$env:USERPROFILE\OneDrive\GITHub\Dedupe\Test Data\Duplicates in two folders with csv\Test data\Folder B"
 
 # Get a list of the files, hash them and store in a variable with their algorithm, hash and path
-$folderAData = Get-ChildItem -Path $folderA -Recurse | Get-FileHash
-$folderBData = Get-ChildItem -Path $folderB -Recurse | Get-FileHash
+$folderAData = Get-ChildItem -Path $folderA -Recurse -File | Get-FileHash
+$folderBData = Get-ChildItem -Path $folderB -Recurse -File | Get-FileHash
 
 # Export data to CSV files (these files are not used in code, just for your reference)
 $folderAData | Export-Csv -Path "$env:USERPROFILE\Dedupe - FolderA.csv" -NoTypeInformation
